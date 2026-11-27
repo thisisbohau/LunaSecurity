@@ -1,0 +1,281 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Luna Alarm",
+        "description": "Pick the entities for each role. The system starts in **test mode**: everything is logged and notified, nothing sounds. Timings are in the options afterwards.",
+        "sections": {
+          "detection": {
+            "name": "Cameras and contacts",
+            "description": "Which sources mean what. Use the person binary sensors (or event entities) of each camera.",
+            "data": {
+              "wake_sensors": "Wake cameras (outside the gate)",
+              "visitor_sensors": "Visitor zone (inside the gate)",
+              "offlimits_sensors": "Off-limits zone",
+              "contact_sensors": "Window contacts",
+              "car_events": "Car watch (event entities)"
+            },
+            "data_description": {
+              "wake_sensors": "Doorbell, garage. Open a short wake window, never alarm on their own.",
+              "visitor_sensors": "Entry camera. Short visits after a wake are fine; repeated visits or no wake raise an alert.",
+              "offlimits_sensors": "Garden / fence. A person here raises an alert whenever armed.",
+              "contact_sensors": "Opening raises an alert in away mode. Ignored at night.",
+              "car_events": "Garage camera detection event. Vehicle or person after dark → notification, never an alarm."
+            }
+          },
+          "house": {
+            "name": "House",
+            "description": "Presence, lock, building mode and the physical killswitch.",
+            "data": {
+              "persons": "Household members",
+              "lock": "Front door lock",
+              "inside_unlock_attribute": "Lock attribute that tells the unlock source",
+              "inside_unlock_values": "Values that mean 'from inside'",
+              "building_mode": "Building mode entity",
+              "night_states": "Building mode values that mean night",
+              "killswitch": "Physical killswitch (event entity)",
+              "press_single": "Event types for a single press",
+              "press_double": "Event types for a double press",
+              "press_long": "Event types for a long press"
+            },
+            "data_description": {
+              "persons": "Everyone away → away protection arms. Arrival disarms it.",
+              "lock": "Locked + building mode night arms the night watch.",
+              "inside_unlock_attribute": "Optional. Leave empty if your lock doesn't report it; every unlock then counts as from inside.",
+              "inside_unlock_values": "Comma-separated, e.g. manual, button.",
+              "building_mode": "Your building mode helper.",
+              "night_states": "Comma-separated.",
+              "killswitch": "Optional button inside the house.",
+              "press_single": "Comma-separated. Single = pause 5 min.",
+              "press_double": "Comma-separated. Double = disarm.",
+              "press_long": "Comma-separated. Long = master switch off."
+            }
+          },
+          "outputs": {
+            "name": "Alarm outputs",
+            "description": "Never used while test mode is on.",
+            "data": {
+              "sirens": "Sirens",
+              "camera_lights": "Camera lights",
+              "flash_lights": "Indoor lights to flash red",
+              "audio_players": "Speakers for the indoor alarm",
+              "audio_media": "Alarm sound (media content id)"
+            },
+            "data_description": {
+              "sirens": "HomeBase and camera sirens.",
+              "camera_lights": "Spotlight switches of the cameras.",
+              "flash_lights": "Colour lights inside.",
+              "audio_players": "Media players.",
+              "audio_media": "For example media-source://media_source/local/alarm.mp3"
+            }
+          },
+          "notifications": {
+            "name": "Notifications and self-check",
+            "description": "Where alerts go and what must be online to arm.",
+            "data": {
+              "notify_services": "Notify services",
+              "health_entities": "Extra entities to monitor",
+              "battery_sensors": "Battery sensors",
+              "min_battery": "Minimum battery"
+            },
+            "data_description": {
+              "notify_services": "One per phone, e.g. notify.mobile_app_my_iphone.",
+              "health_entities": "Anything else that must be available to arm (e.g. eufy connectivity sensors).",
+              "battery_sensors": "Below the minimum counts as a self-check problem."
+            }
+          }
+        }
+      }
+    },
+    "abort": {
+      "already_configured": "Luna Alarm is already set up."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Luna Alarm options",
+        "sections": {
+          "detection": {
+            "name": "Cameras and contacts",
+            "description": "Which sources mean what. Use the person binary sensors (or event entities) of each camera.",
+            "data": {
+              "wake_sensors": "Wake cameras (outside the gate)",
+              "visitor_sensors": "Visitor zone (inside the gate)",
+              "offlimits_sensors": "Off-limits zone",
+              "contact_sensors": "Window contacts",
+              "car_events": "Car watch (event entities)"
+            },
+            "data_description": {
+              "wake_sensors": "Doorbell, garage. Open a short wake window, never alarm on their own.",
+              "visitor_sensors": "Entry camera. Short visits after a wake are fine; repeated visits or no wake raise an alert.",
+              "offlimits_sensors": "Garden / fence. A person here raises an alert whenever armed.",
+              "contact_sensors": "Opening raises an alert in away mode. Ignored at night.",
+              "car_events": "Garage camera detection event. Vehicle or person after dark → notification, never an alarm."
+            }
+          },
+          "house": {
+            "name": "House",
+            "description": "Presence, lock, building mode and the physical killswitch.",
+            "data": {
+              "persons": "Household members",
+              "lock": "Front door lock",
+              "inside_unlock_attribute": "Lock attribute that tells the unlock source",
+              "inside_unlock_values": "Values that mean 'from inside'",
+              "building_mode": "Building mode entity",
+              "night_states": "Building mode values that mean night",
+              "killswitch": "Physical killswitch (event entity)",
+              "press_single": "Event types for a single press",
+              "press_double": "Event types for a double press",
+              "press_long": "Event types for a long press"
+            },
+            "data_description": {
+              "persons": "Everyone away → away protection arms. Arrival disarms it.",
+              "lock": "Locked + building mode night arms the night watch.",
+              "inside_unlock_attribute": "Optional. Leave empty if your lock doesn't report it; every unlock then counts as from inside.",
+              "inside_unlock_values": "Comma-separated, e.g. manual, button.",
+              "building_mode": "Your building mode helper.",
+              "night_states": "Comma-separated.",
+              "killswitch": "Optional button inside the house.",
+              "press_single": "Comma-separated. Single = pause 5 min.",
+              "press_double": "Comma-separated. Double = disarm.",
+              "press_long": "Comma-separated. Long = master switch off."
+            }
+          },
+          "outputs": {
+            "name": "Alarm outputs",
+            "description": "Never used while test mode is on.",
+            "data": {
+              "sirens": "Sirens",
+              "camera_lights": "Camera lights",
+              "flash_lights": "Indoor lights to flash red",
+              "audio_players": "Speakers for the indoor alarm",
+              "audio_media": "Alarm sound (media content id)"
+            },
+            "data_description": {
+              "sirens": "HomeBase and camera sirens.",
+              "camera_lights": "Spotlight switches of the cameras.",
+              "flash_lights": "Colour lights inside.",
+              "audio_players": "Media players.",
+              "audio_media": "For example media-source://media_source/local/alarm.mp3"
+            }
+          },
+          "notifications": {
+            "name": "Notifications and self-check",
+            "description": "Where alerts go and what must be online to arm.",
+            "data": {
+              "notify_services": "Notify services",
+              "health_entities": "Extra entities to monitor",
+              "battery_sensors": "Battery sensors",
+              "min_battery": "Minimum battery"
+            },
+            "data_description": {
+              "notify_services": "One per phone, e.g. notify.mobile_app_my_iphone.",
+              "health_entities": "Anything else that must be available to arm (e.g. eufy connectivity sensors).",
+              "battery_sensors": "Below the minimum counts as a self-check problem."
+            }
+          },
+          "timings": {
+            "name": "Timings",
+            "description": "",
+            "data": {
+              "arming_away": "Exit delay, away",
+              "arming_night": "Arming notice, night",
+              "pending_away": "Response window, away",
+              "pending_night": "Response window, night",
+              "siren_time": "Siren duration",
+              "trigger_time": "Alarm duration before re-arming",
+              "wake_window": "Wake window",
+              "visitor_hits": "Entry visits before an alert",
+              "car_hits": "Car events before an urgent notification",
+              "leave_delay": "Everyone away for",
+              "pause_unlock": "Pause after an inside unlock",
+              "pause_arrival": "Pause after an arrival at night",
+              "pause_button": "Pause from button / killswitch",
+              "night_end": "Night watch ends at",
+              "summary_time": "Fallback summary time"
+            },
+            "data_description": {
+              "visitor_hits": "Within one wake window.",
+              "car_hits": "Within 10 minutes.",
+              "leave_delay": "Before away protection arms.",
+              "night_end": "Also: an inside unlock after this time ends the night.",
+              "summary_time": "Sent here if no summary went out in the last 20 hours."
+            }
+          }
+        }
+      }
+    }
+  },
+  "entity": {
+    "switch": {
+      "master": {
+        "name": "Alarm system"
+      },
+      "test_mode": {
+        "name": "Test mode"
+      },
+      "auto_away": {
+        "name": "Auto-arm away"
+      },
+      "auto_night": {
+        "name": "Auto-arm night"
+      }
+    },
+    "binary_sensor": {
+      "self_check": {
+        "name": "Self-check"
+      }
+    },
+    "sensor": {
+      "last_event": {
+        "name": "Last event"
+      },
+      "last_summary": {
+        "name": "Last summary"
+      }
+    },
+    "button": {
+      "pause": {
+        "name": "Pause 5 minutes"
+      },
+      "send_summary": {
+        "name": "Send summary now"
+      }
+    }
+  },
+  "services": {
+    "pause": {
+      "name": "Pause",
+      "description": "Pause the armed system for a while.",
+      "fields": {
+        "minutes": {
+          "name": "Minutes",
+          "description": "How long."
+        },
+        "reason": {
+          "name": "Reason",
+          "description": "Shown in the notification and journal."
+        }
+      }
+    },
+    "send_summary": {
+      "name": "Send summary",
+      "description": "Send the summary of everything since the last one now."
+    },
+    "simulate_detection": {
+      "name": "Simulate detection",
+      "description": "Feed a fake detection for a configured source, to test the logic.",
+      "fields": {
+        "entity_id": {
+          "name": "Source",
+          "description": "A configured camera sensor or contact."
+        },
+        "kind": {
+          "name": "Kind",
+          "description": "person, vehicle or open."
+        }
+      }
+    }
+  }
+}

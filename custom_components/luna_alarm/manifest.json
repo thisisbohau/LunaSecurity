@@ -1,0 +1,12 @@
+{
+  "domain": "luna_alarm",
+  "name": "Luna Alarm",
+  "after_dependencies": ["mobile_app", "person", "sun", "scene"],
+  "codeowners": ["@thisisbohau"],
+  "config_flow": true,
+  "documentation": "https://github.com/thisisbohau/LunaSecurity",
+  "iot_class": "local_push",
+  "issue_tracker": "https://github.com/thisisbohau/LunaSecurity/issues",
+  "requirements": [],
+  "version": "0.1.0"
+}
